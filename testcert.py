@@ -350,7 +350,12 @@ class LogoCert(unittest.TestCase):
       Sleep('AUTO_RUN')
       return True
     print 'Did the test produce the expected result?'
-    result = PromptAndWaitForUserAction('Enter "y" or "n"')
+    result = PromptAndWaitForUserAction("Enter 'y' or 'n': ")
+    pattern = re.compile("^[yYnN]")
+    while not pattern.match(result):
+      print ('Invalid input: "' + result + '"')
+      result = PromptAndWaitForUserAction("Enter 'y' or 'n': ")
+    result = result[0].lower()
     try:
       self.assertEqual(result.lower(), 'y')
     except AssertionError:
